@@ -97,6 +97,9 @@ func dial(ctx context.Context, addr string, num int, opt *Options) (*connect, er
 	}
 
 	if err := connect.handshake(auth); err != nil {
+		if connect.conn != nil {
+			connect.conn.Close()
+		}
 		return nil, err
 	}
 
